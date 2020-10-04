@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ecommercegamesmobile"
+        applicationId "com.ecommerce"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

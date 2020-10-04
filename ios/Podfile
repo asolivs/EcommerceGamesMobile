@@ -3,12 +3,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'EcommerceGamesMobile' do
+target 'ECommerce' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'EcommerceGamesMobileTests' do
+  target 'ECommerceTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -23,10 +23,10 @@ target 'EcommerceGamesMobile' do
   end
 end
 
-target 'EcommerceGamesMobile-tvOS' do
-  # Pods for EcommerceGamesMobile-tvOS
+target 'ECommerce-tvOS' do
+  # Pods for ECommerce-tvOS
 
-  target 'EcommerceGamesMobile-tvOSTests' do
+  target 'ECommerce-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

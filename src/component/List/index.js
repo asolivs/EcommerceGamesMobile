@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import {SafeAreaView, Text, View, TouchableOpacity, StyleSheet, FlatList,Image } from 'react-native'
-import { round } from 'react-native-reanimated';
+import {SafeAreaView,ScrollView, Text, View, TouchableOpacity, StyleSheet, FlatList,Image } from 'react-native'
 
-                    
-import logo from "../../assets/super-mario-odyssey.png";
-   
 class List extends Component {
 //componente para renderizar a lista complenta usando o flatlist
    constructor(props) {
@@ -18,7 +14,7 @@ class List extends Component {
     };
 
    alertItemName = (item) => {
-       console.log(item)
+      
       alert(item.name)
    }
 
@@ -41,40 +37,39 @@ class List extends Component {
 
     
     return(
-       <View style={styles.productContainer} >
-
+      //key em cada renderização como boa patrica.
+       <View style={styles.productContainer} key={item.id.toString()} >
+            <Text style = {styles.title}>
+                {item.name}
+                </Text>
             <View  style={{ flexDirection: "row"}}>
             <Image
             style={styles.image}
             source={this.state.listimage[item.id]}
             /> 
             <View style={styles.productDescription}> 
-                <Text style = {styles.title}>
-                {item.name}
-                </Text>
-                <Text style = {styles.title}>
+
+                <Text style = {styles.list}>
                 Score:{item.score}
                 </Text>
-                <Text style = {styles.title}>
+                <Text style = {styles.list}>
                 Price:R$ {item.price}
                 </Text>
                 
                 <TouchableOpacity style={styles.productButton} 
-                  onPress={() => this.props.navigation.navigation.navigate('Product',
+                  onPress={() => this.props.navigation.navigate('Product',
                   
                   {
                     item: item,
                     itemImage:this.state.listimage[item.id]
 
                   })}>
-                    <Text>
+                    <Text style={styles.text} >
                     Add Cart
                     </Text>
                     </TouchableOpacity>
             </View>
-
         </View>  
-
         </View>
     )
   }
@@ -83,46 +78,43 @@ class List extends Component {
 
    render() {
 
-      console.log('vasdfas',this.props.list ) 
-
-      
-    // this.state.list= this.props.list; 
-    // this.setState({list:this.props.list});  
-
     return(
-            <View style= {styles.container}>
+      
+        <ScrollView style= {styles.container}>
 
           {this.state.list.map((item,index)=>(
               this.renderItem(item)
           ))
            }
-            {/* <FlatList
-             contentContainerStyle={styles.list}
-             data={this.state.list}
-             renderItem={this.renderItem}
-            //  keyExtractor={item => item.id}
-             /> */}
-        </View>  
 
-      )
-   }
+        </ScrollView>  
+    )  
+ }
 }
 export default List
 
 const styles = StyleSheet.create ({
    conteiner: {
        flex:1,
-       backgroundColor: '#FFF',
-       borderColor:"red"
+       backgroundColor: '#f4511e',
+       borderColor:"#f4511e"
    } ,
    list: {
-      padding: 15,
+    
+      fontSize: 15,
+      marginLeft:10,
+      fontWeight:"bold"
+    
       
    },
    title: {
-    fontSize: 15,
-    marginLeft:10,
-    fontWeight:"bold"
+    borderRadius: 10,
+    fontSize: 20,
+    // marginLeft:10,
+    fontWeight:"bold",
+    color:"white",
+    padding:10,
+    backgroundColor: '#f4511e',
   },
 
    item: {
@@ -133,15 +125,15 @@ const styles = StyleSheet.create ({
     borderRadius:15
   },
    text: {
-      color: 'black',
-    
+      color: 'white',
+      fontWeight:"bold"
       
    },
    image: {
-    width: 90,
-    height: 140,
-    marginLeft:5,
-    borderRadius:30
+    width: 80,
+    height: 120,
+    margin:5,
+    borderRadius:10
   },
   logo: {
     width: 66,
@@ -152,11 +144,11 @@ const styles = StyleSheet.create ({
     width: 159,
     borderRadius:5,
     borderWidth:2,
-    borderColor:"red",
-    backgroundColor:"transparent",
+    borderColor:"green",
+    backgroundColor:"green",
     justifyContent:"center",
     alignItems:"center",
-    margin:30
+    margin:15
    },
    productDescription:{
        fontSize:16,
@@ -167,10 +159,10 @@ const styles = StyleSheet.create ({
    },
    productContainer:{
        backgroundColor:"#FFF",
-       borderWidth:1,
-       borderColor:"red",
-       borderRadius: 10,
-       padding:5,
+
+       borderColor:"#FFF",
+
+      //  padding:5,
        margin:10
        
    }

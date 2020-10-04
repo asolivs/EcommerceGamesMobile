@@ -4,25 +4,37 @@ import AsyncStorage from '@react-native-community/async-storage'
 export const storeData = async (key,value) => {
     try {
     //   
-    console.log('vai passa', key,value)
+    
       await AsyncStorage.setItem(key, value)
     } catch (e) {
-        console.log(e);
+    
       // saving error
     }
 }
 
 export const getData = async (key) => {
-    try {
-        console.log('vai buscar',key);
-         const value=  await AsyncStorage.getItem(key)
-         return value;
-    
+  return new Promise((resolve, reject) => {  
+  try {
+         AsyncStorage.getItem(key,(ee,value) =>{
+             return resolve (value);
+           })
       
-    } catch(e) { console.log(e)
+    } catch(e) { 
+      return  reject(e)
       // error reading value
     }
+  })
 }
+
+export const deleteData = async (key) => {
+  try {
+      await AsyncStorage.removeItem(key)
+  } catch(e) {
+      return 'erro';
+    // error reading value
+  }
+}
+
 
 export const mergeData = async (key,jsonValue) => {
     try {

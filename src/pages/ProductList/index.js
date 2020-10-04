@@ -1,17 +1,11 @@
 
 import React, { useState } from "react";
 
-import {
-Button,
-  StyleSheet,
-View,
-Text
-} from 'react-native';
+import {  StyleSheet,View,Text,TouchableOpacity} from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
 
-import {  Colors} from 'react-native/Libraries/NewAppScreen';
-
+import Icon from 'react-native-vector-icons/AntDesign';
 import {images} from '../../bd/images';
 const customData = require('../../bd/products.json');
 
@@ -19,17 +13,36 @@ const customData = require('../../bd/products.json');
 import List from '../../component/List'
 
 
-const ProductList = (navigation) => {
+const ProductList = ({navigation}) => {
  //renderização da lista de games
 var product = customData;  
 
+React.useLayoutEffect(() => {
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity style={styles.buttonHearde}
+     onPress={() => navigation.navigate('Cart',
+      
+      {
+        list: product,
+        listimage:  images      
 
+      }
+      
+      
+      )}>
+    <Icon name="shoppingcart" size={18} color="#BBBB" />
 
+                        </TouchableOpacity>
+
+        ),
+      });
+    }, [navigation]);
 
 const [selectedValue, setSelectedValue] = useState("price");
 //ordenação da lista de acordo com o que e selecionado no picker (select)
 product.sort(function(a,b){
-  console.log(selectedValue)
+
   if (selectedValue == 'name'){
   if (a.name > b.name) {
     return 1;
@@ -48,21 +61,16 @@ product.sort(function(a,b){
     }
 })
 
-
-// console.log(product);
-
 return(
 <>
-
-{console.log(product)}
         <View style={styles.container}>
-            <View  style={styles.item}>
+            <View  style={styles.view}>
               <Text style={styles.item}>Order:</Text>
     
               <Picker
                 selectedValue={selectedValue}
                 mode= "dropdown"
-              style={{ height: 50, width: 250 }}
+              style={styles.select}
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
                 <Picker.Item style={{   fontWeight:'800'}} label="Price" value="price" />
@@ -85,15 +93,49 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     alignItems:"stretch",
-    borderRadius:5,
+    borderRadius:15,
+    borderColor:"black", 
   },
-  item: {
+  buttonHearde:{
+    height:42,
+    width: 50,
+    borderRadius:5,
+    borderWidth:2,
+    borderColor:"#FFFA",
     backgroundColor: '#FFFF',
-    
-    margin: 10,
-    
+    justifyContent:"center",
     alignItems:"center",
-    rflexDirection: "row"
+    margin:15
+  },
+  view: {
+    
+    backgroundColor: '#FFFF',
+    flexDirection: "row",
+    margin: 10,
+    borderRadius:10,
+    alignItems:"center",
+      },
+  
+  item: {
+    
+    borderRadius:15,
+    backgroundColor: '#FFFF',
+    margin: 10,
+    alignItems:"center",
+    flexDirection: "row",
+    width: 100 
+  },
+  
+  select: {
+    justifyContent:"center",
+
+    borderRadius:15,
+    borderColor:"black",
+
+    marginLeft: 15,
+    alignItems:"center",
+    height: 30, 
+    width: 200 
   },
 });
 export default ProductList;
